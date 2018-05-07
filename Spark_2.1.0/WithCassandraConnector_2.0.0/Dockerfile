@@ -1,7 +1,7 @@
 FROM openjdk:8
 
 # Scala related variables.
-ARG SCALA_VERSION=2.11.6 
+ARG SCALA_VERSION=2.11.8
 ARG SCALA_BINARY_ARCHIVE_NAME=scala-${SCALA_VERSION}
 ARG SCALA_BINARY_DOWNLOAD_URL=http://downloads.lightbend.com/scala/${SCALA_VERSION}/${SCALA_BINARY_ARCHIVE_NAME}.tgz
 
@@ -37,7 +37,7 @@ RUN apt-get -yqq update && \
 USER root
 
 # Working directory is set to the home folder of `root` user.
-WORKDIR /root
+WORKDIR $SPARK_HOME
 
 # Expose ports for monitoring.
 # SparkContext web UI on 4040 -- only available for the duration of the application.
@@ -46,7 +46,7 @@ WORKDIR /root
 EXPOSE 4040 8080 8081
 COPY spark-cassandra-connector_2.11-2.0.0.jar /usr/local/spark-cassandra-connector_2.11-2.0.0.jar
 COPY docker-entrypoint.sh /usr/local/bin/
-RUN ln -s usr/local/bin/docker-entrypoint.sh /entrypoint.sh
-ENTRYPOINT ["docker-entrypoint.sh"]
-#CMD ["sbin/start-thriftserver.sh --hiveconf hive.server2.thrift.port 10000 --hiveconf hive.metastore.warehouse.dir ~/hive/warehouse"]
+#RUN ln -s usr/local/bin/docker-entrypoint.sh /entrypoint.sh
+#ENTRYPOINT ["docker-entrypoint.sh"]
+#CMD ["sbin/start-thriftserver.sh --hiveconf hive.server2.thrift.port 10000 --hiveconf #hive.metastore.warehouse.dir ~/hive/warehouse"]
 
